@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anime Next Watch Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Work+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <p class="eyebrow">Anime Discovery Project</p>
+        <h1>Find your next anime without endless scrolling.</h1>
+        <p class="hero-copy">
+          Search for an anime title or load a curated list of popular picks
+          powered by the Jikan API.
+        </p>
+      </header>
+
+      <main class="app-layout">
+        <section class="panel controls-panel" aria-labelledby="controls-title">
+          <div class="panel-heading">
+            <h2 id="controls-title">Search Anime</h2>
+            <p>Milestone 2 focuses on fetching and displaying live anime data.</p>
+          </div>
+
+          <form class="controls-form" id="controls-form">
+            <label class="field">
+              <span>Search title</span>
+              <input
+                id="search-input"
+                name="search"
+                type="search"
+                placeholder="Search anime titles"
+                autocomplete="off"
+              />
+            </label>
+
+            <div class="button-group">
+              <button class="primary-button" id="generate-button" type="submit">
+                Search Anime
+              </button>
+              <button class="secondary-button" id="load-popular-button" type="button">
+                Load Popular Anime
+              </button>
+            </div>
+          </form>
+
+          <div class="milestone-note">
+            <h3>Coming in Milestone 3</h3>
+            <p>Filtering, sorting, and more interactive features will be added next.</p>
+          </div>
+        </section>
+
+        <section class="panel results-panel" aria-labelledby="results-title">
+          <div class="panel-heading">
+            <h2 id="results-title">Results</h2>
+            <p id="status-text">
+              The app scaffold is ready. API integration will display anime cards
+              here next.
+            </p>
+          </div>
+
+          <div class="results-grid" id="results-grid" aria-live="polite"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
