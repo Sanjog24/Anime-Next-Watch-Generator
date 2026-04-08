@@ -11,6 +11,17 @@
   --shadow: 0 24px 60px rgba(15, 23, 42, 0.38);
 }
 
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-accent: #e2e8f0;
+  --panel: rgba(255, 255, 255, 0.92);
+  --panel-border: rgba(15, 23, 42, 0.08);
+  --text: #0f172a;
+  --muted: #475569;
+  --card: rgba(255, 255, 255, 0.96);
+  --shadow: 0 24px 60px rgba(148, 163, 184, 0.22);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -25,6 +36,7 @@ body {
     radial-gradient(circle at top left, rgba(249, 115, 22, 0.24), transparent 32%),
     radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.22), transparent 28%),
     linear-gradient(160deg, var(--bg) 0%, #020617 100%);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 button,
@@ -41,6 +53,13 @@ select {
 
 .hero {
   margin-bottom: 2rem;
+}
+
+.hero-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .eyebrow {
@@ -65,6 +84,16 @@ select {
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.7;
+}
+
+.theme-toggle {
+  padding: 0.7rem 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(15, 23, 42, 0.28);
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .app-layout {
@@ -248,6 +277,34 @@ select {
   line-height: 1.6;
 }
 
+.genre-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.favorite-button {
+  padding: 0.75rem 0.95rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  color: var(--text);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.favorite-button.active {
+  color: #fff7ed;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border-color: transparent;
+}
+
 .anime-link {
   color: #fdba74;
   font-weight: 700;
@@ -283,6 +340,7 @@ select {
 
 .loading-card {
   min-height: 260px;
+  padding: 1.25rem;
 }
 
 .loading-line {
@@ -338,7 +396,14 @@ select {
     max-width: none;
   }
 
-  .anime-card img {
+  .hero-topbar,
+  .card-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .anime-card img,
+  .image-placeholder {
     height: 240px;
   }
 }

@@ -47,13 +47,16 @@ The project will use an external Anime API such as:
 * Display anime cards dynamically
 * Show loading and error states
 * Responsive layout for mobile, tablet, and desktop
+* Filter anime by genre
+* Sort anime by title, score, or episodes
+* Save favorites using local storage
+* Toggle between dark mode and light mode
 
 ### Planned Next Features
 
-* Filter by genre
-* Sort by popularity, rating, or title
-* Save favorite anime
 * Generate more suggestions instantly
+* Add more detailed recommendation logic
+* Improve watchlist features
 
 ---
 
@@ -108,7 +111,7 @@ No build tools or package installation are required for this version because the
 
 ##  Project Status
 
- **Currently in Milestone 2 Phase**
+ **Currently in Milestone 3 Phase**
 
 * Project idea finalized
 * API selected
@@ -116,6 +119,9 @@ No build tools or package installation are required for this version because the
 * Live API integration completed
 * Dynamic data display added
 * Loading and error handling included
+* Search, filter, and sorting added using array higher-order functions
+* Favorite button interactions added
+* Dark mode and light mode toggle added
 
 ---
 

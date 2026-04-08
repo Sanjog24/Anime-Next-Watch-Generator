@@ -15,7 +15,12 @@
   <body>
     <div class="page-shell">
       <header class="hero">
-        <p class="eyebrow">Anime Discovery Project</p>
+        <div class="hero-topbar">
+          <p class="eyebrow">Anime Discovery Project</p>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+            Toggle Theme
+          </button>
+        </div>
         <h1>Find your next anime without endless scrolling.</h1>
         <p class="hero-copy">
           Search for an anime title or load a curated list of popular picks
@@ -26,8 +31,8 @@
       <main class="app-layout">
         <section class="panel controls-panel" aria-labelledby="controls-title">
           <div class="panel-heading">
-            <h2 id="controls-title">Search Anime</h2>
-            <p>Milestone 2 focuses on fetching and displaying live anime data.</p>
+            <h2 id="controls-title">Explore Anime</h2>
+            <p>Use search, filter, sort, favorites, and theme toggle for Milestone 3.</p>
           </div>
 
           <form class="controls-form" id="controls-form">
@@ -42,6 +47,23 @@
               />
             </label>
 
+            <label class="field">
+              <span>Filter by genre</span>
+              <select id="genre-select" name="genre">
+                <option value="all">All genres</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Sort results</span>
+              <select id="sort-select" name="sort">
+                <option value="default">Default order</option>
+                <option value="title-asc">Title A-Z</option>
+                <option value="score-desc">Highest score</option>
+                <option value="episodes-desc">Most episodes</option>
+              </select>
+            </label>
+
             <div class="button-group">
               <button class="primary-button" id="generate-button" type="submit">
                 Search Anime
@@ -53,8 +75,8 @@
           </form>
 
           <div class="milestone-note">
-            <h3>Coming in Milestone 3</h3>
-            <p>Filtering, sorting, and more interactive features will be added next.</p>
+            <h3>Favorites Saved</h3>
+            <p><span id="favorites-count">0</span> anime marked as favorite in this browser.</p>
           </div>
         </section>
 
