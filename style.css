@@ -22,6 +22,13 @@
   --shadow: 0 24px 60px rgba(148, 163, 184, 0.22);
 }
 
+[data-theme="light"] body {
+  background:
+    radial-gradient(circle at top left, rgba(249, 115, 22, 0.18), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.12), transparent 28%),
+    linear-gradient(160deg, var(--bg) 0%, #e2e8f0 100%);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -94,6 +101,12 @@ select {
   background: rgba(15, 23, 42, 0.28);
   cursor: pointer;
   font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  border-color: rgba(249, 115, 22, 0.55);
 }
 
 .app-layout {
@@ -156,6 +169,14 @@ select {
   border-radius: 14px;
   outline: none;
   transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+[data-theme="light"] .field input,
+[data-theme="light"] .field select,
+[data-theme="light"] .secondary-button,
+[data-theme="light"] .theme-toggle,
+[data-theme="light"] .milestone-note {
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .field input:focus,
@@ -297,6 +318,12 @@ select {
   background: transparent;
   cursor: pointer;
   font-weight: 700;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.favorite-button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(249, 115, 22, 0.55);
 }
 
 .favorite-button.active {

@@ -4,7 +4,7 @@
 
 **Anime Next Watch Generator** is a web application designed to help users quickly decide what anime to watch next. With thousands of anime available, users often face decision fatigue. This project solves that problem by providing smart, quick, and engaging anime recommendations.
 
-The project now includes a basic frontend interface and Milestone 2 API integration using live anime data.
+The final version includes a responsive frontend, live anime data from the Jikan API, and interactive features such as search, filtering, sorting, favorites, and theme switching.
 
 ---
 
@@ -21,7 +21,7 @@ The goal of this project is to:
 
 ## API Used
 
-The project will use an external Anime API such as:
+The project uses:
 
 * **Jikan API (MyAnimeList unofficial API)**
    https://api.jikan.moe/
@@ -40,7 +40,7 @@ The project will use an external Anime API such as:
   * Images
 
 
-### Current Features
+## Features
 
 * Search anime by title
 * Load popular anime from the API
@@ -51,12 +51,6 @@ The project will use an external Anime API such as:
 * Sort anime by title, score, or episodes
 * Save favorites using local storage
 * Toggle between dark mode and light mode
-
-### Planned Next Features
-
-* Generate more suggestions instantly
-* Add more detailed recommendation logic
-* Improve watchlist features
 
 ---
 
@@ -75,7 +69,7 @@ The project will use an external Anime API such as:
 
 * **Deployment:**
 
-  * Netlify / Vercel
+  * Ready to deploy on Netlify or Vercel
 
 ---
 
@@ -100,7 +94,7 @@ Anime-Next-Watch-Generator/
 └── README.md
 ```
 
-## ▶️ How to Run
+## ▶️ How to Run Locally
 
 1. Clone or download the repository
 2. Open the project folder
@@ -109,29 +103,26 @@ Anime-Next-Watch-Generator/
 No build tools or package installation are required for this version because the project uses plain HTML, CSS, and JavaScript.
 
 
-##  Project Status
+## Code Highlights
 
- **Currently in Milestone 3 Phase**
+* Search, filtering, and sorting are handled with array higher-order functions such as `filter()`, `some()`, `map()`, and `sort()`
+* Favorites and theme selection are stored using browser local storage
+* The UI is responsive across mobile, tablet, and desktop layouts
+* The project uses modular JavaScript functions for fetching data, processing results, and rendering cards
 
-* Project idea finalized
-* API selected
-* Basic frontend files created
-* Live API integration completed
-* Dynamic data display added
-* Loading and error handling included
-* Search, filter, and sorting added using array higher-order functions
-* Favorite button interactions added
-* Dark mode and light mode toggle added
+## Deployment
+
+This project can be deployed on platforms such as Netlify or Vercel by uploading the repository and setting the publish directory to the project root.
 
 ---
 
-## Future Scope
+## Future Improvements
 
 This project can be extended into:
 
-* A full anime recommendation system
-* A personalized dashboard using user preferences
-* Integration with user login and cloud storage
+* More detailed anime recommendation logic
+* A full watchlist page
+* User accounts and cloud storage
 
 ---
 

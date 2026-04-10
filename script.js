@@ -1,11 +1,26 @@
+const API_BASE_URL = "https://api.jikan.moe/v4";
+const RESULT_LIMIT = 18;
+const STORAGE_KEYS = {
+  favorites: "anime-favorites",
+  theme: "anime-theme",
+};
+
+const parseStoredArray = (value) => {
+  try {
+    return JSON.parse(value) || [];
+  } catch {
+    return [];
+  }
+};
+
 const state = {
   searchTerm: "",
   selectedGenre: "all",
   selectedSort: "default",
   animeList: [],
-  favorites: JSON.parse(localStorage.getItem("anime-favorites")) || [],
+  favorites: parseStoredArray(localStorage.getItem(STORAGE_KEYS.favorites)),
   currentLabel: "popular anime",
-  theme: localStorage.getItem("anime-theme") || "dark",
+  theme: localStorage.getItem(STORAGE_KEYS.theme) || "dark",
 };
 
 const elements = {
@@ -26,6 +41,10 @@ const updateState = () => {
   state.selectedSort = elements.sortSelect.value;
 };
 
+const setStatus = (message) => {
+  elements.statusText.textContent = message;
+};
+
 const escapeHtml = (value) =>
   String(value)
     .replaceAll("&", "&amp;")
@@ -35,14 +54,14 @@ const escapeHtml = (value) =>
     .replaceAll("'", "&#39;");
 
 const saveFavorites = () => {
-  localStorage.setItem("anime-favorites", JSON.stringify(state.favorites));
+  localStorage.setItem(STORAGE_KEYS.favorites, JSON.stringify(state.favorites));
   elements.favoritesCount.textContent = String(state.favorites.length);
 };
 
 const applyTheme = () => {
   document.body.dataset.theme = state.theme;
   elements.themeToggle.textContent = state.theme === "dark" ? "Light Mode" : "Dark Mode";
-  localStorage.setItem("anime-theme", state.theme);
+  localStorage.setItem(STORAGE_KEYS.theme, state.theme);
 };
 
 const updateGenreOptions = () => {
@@ -65,7 +84,7 @@ const updateGenreOptions = () => {
 };
 
 const getProcessedAnime = () =>
-  state.animeList
+  [...state.animeList]
     .filter((anime) => {
       if (!state.searchTerm) {
         return true;
@@ -96,6 +115,22 @@ const getProcessedAnime = () =>
       return 0;
     });
 
+const buildEndpoint = (searchTerm) => {
+  if (!searchTerm) {
+    return `${API_BASE_URL}/top/anime?limit=${RESULT_LIMIT}`;
+  }
+
+  return `${API_BASE_URL}/anime?q=${encodeURIComponent(searchTerm)}&limit=${RESULT_LIMIT}`;
+};
+
+const getAnimeLabel = (searchTerm) => (searchTerm ? `"${searchTerm}" results` : "popular anime");
+
+const getAnimeGenres = (anime) =>
+  (anime.genres || [])
+    .slice(0, 2)
+    .map((genre) => genre.name)
+    .join(", ") || "Genre not listed";
+
 const createCardMarkup = (anime) => {
   const title = anime.title || "Untitled Anime";
   const image = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || "";
@@ -105,7 +140,7 @@ const createCardMarkup = (anime) => {
   const synopsis = anime.synopsis
     ? `${anime.synopsis.slice(0, 140)}${anime.synopsis.length > 140 ? "..." : ""}`
     : "No synopsis available yet.";
-  const genreText = (anime.genres || []).slice(0, 2).map((genre) => genre.name).join(", ") || "Genre not listed";
+  const genreText = getAnimeGenres(anime);
   const safeTitle = escapeHtml(title);
   const safeSynopsis = escapeHtml(synopsis);
   const safeScore = escapeHtml(score);
@@ -155,7 +190,7 @@ const renderLoadingState = () => {
   `).join("");
 
   elements.resultsGrid.innerHTML = loadingCards;
-  elements.statusText.textContent = "Loading anime recommendations...";
+  setStatus("Loading anime recommendations...");
 };
 
 const renderErrorState = (message) => {
@@ -166,7 +201,7 @@ const renderErrorState = (message) => {
       <p>${escapeHtml(message)}</p>
     </article>
   `;
-  elements.statusText.textContent = "Something went wrong while fetching anime data.";
+  setStatus("Something went wrong while fetching anime data.");
 };
 
 const renderEmptyState = () => {
@@ -177,7 +212,7 @@ const renderEmptyState = () => {
       <p>Try another title, choose a different genre, or reset to popular anime.</p>
     </article>
   `;
-  elements.statusText.textContent = "No anime matched the current search, filter, and sort settings.";
+  setStatus("No anime matched the current search, filter, and sort settings.");
 };
 
 const renderAnimeList = () => {
@@ -189,8 +224,7 @@ const renderAnimeList = () => {
   }
 
   elements.resultsGrid.innerHTML = processedAnime.map(createCardMarkup).join("");
-  elements.statusText.textContent =
-    `Showing ${processedAnime.length} anime from ${state.currentLabel}.`;
+  setStatus(`Showing ${processedAnime.length} anime from ${state.currentLabel}.`);
 };
 
 const fetchAnime = async (endpoint, label) => {
@@ -217,14 +251,7 @@ const handleSubmit = async (event) => {
   event.preventDefault();
   const rawSearch = elements.searchInput.value.trim();
   updateState();
-
-  if (!rawSearch) {
-    fetchAnime("https://api.jikan.moe/v4/top/anime?limit=18", "popular anime");
-    return;
-  }
-
-  const query = encodeURIComponent(rawSearch);
-  fetchAnime(`https://api.jikan.moe/v4/anime?q=${query}&limit=18`, `"${rawSearch}" results`);
+  fetchAnime(buildEndpoint(rawSearch), getAnimeLabel(rawSearch));
 };
 
 const handlePopularClick = () => {
@@ -232,8 +259,9 @@ const handlePopularClick = () => {
   state.searchTerm = "";
   state.selectedGenre = "all";
   state.selectedSort = "default";
+  elements.genreSelect.value = "all";
   elements.sortSelect.value = "default";
-  fetchAnime("https://api.jikan.moe/v4/top/anime?limit=18", "popular anime");
+  fetchAnime(buildEndpoint(""), getAnimeLabel(""));
 };
 
 const handleControlsChange = () => {
@@ -274,7 +302,7 @@ const init = () => {
   elements.loadPopularButton.addEventListener("click", handlePopularClick);
   elements.resultsGrid.addEventListener("click", handleResultsClick);
   elements.themeToggle.addEventListener("click", handleThemeToggle);
-  fetchAnime("https://api.jikan.moe/v4/top/anime?limit=18", "popular anime");
+  fetchAnime(buildEndpoint(""), getAnimeLabel(""));
 };
 
 init();
